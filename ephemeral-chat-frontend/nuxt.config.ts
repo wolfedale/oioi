@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   devServer: {
-    port: 3001
+    port: 3002
   },
 
   modules: [
@@ -13,7 +13,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Ephemeral Chat',
+      title: 'oi-oi',
       meta: [
         { name: 'description', content: 'A beautiful ephemeral chat experience for 2026' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }

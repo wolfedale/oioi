@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"sync"
 	"time"
 
@@ -161,6 +162,23 @@ func (cs *ChatServer) cleanupOfflineUsers() {
 }
 
 func main() {
+	// Initialize chat server and WebSocket hub
+	chatServer := NewChatServer()
+	wsHub := newWSHub()
+
+	// Start WebSocket hub
+	go wsHub.run()
+
+	// Start WebSocket server on port 3001
+	go func() {
+		mux := http.NewServeMux()
+		mux.HandleFunc("/ws", handleWebSocket(wsHub, chatServer))
+
+		log.Println("Starting WebSocket server on :3001")
+		log.Fatal(http.ListenAndServe(":3001", mux))
+	}()
+
+	// Start Fiber REST API server on port 3000
 	app := fiber.New(fiber.Config{
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -173,13 +191,10 @@ func main() {
 	app.Use(logger.New())
 	app.Use(cors.New())
 
-	// Initialize chat server
-	chatServer := NewChatServer()
-
 	// Routes will be added here
 	setupRoutes(app, chatServer)
 
-	log.Println("Starting ephemeral chat server on :3000")
+	log.Println("Starting REST API server on :3000")
 	log.Fatal(app.Listen(":3000"))
 }
 
@@ -199,7 +214,7 @@ func setupRoutes(app *fiber.App, cs *ChatServer) {
 	presence.Post("/ping", handlePresencePing(cs))
 	presence.Get("/online", handleGetOnlineUsers(cs))
 
-	// Message routes
+	// Keep REST message routes for compatibility (will be deprecated)
 	message := app.Group("/message")
 	message.Post("/send", handleMessageSend(cs))
 	message.Get("/receive", handleMessageReceive(cs))
