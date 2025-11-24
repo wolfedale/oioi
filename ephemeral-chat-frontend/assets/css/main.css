@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Custom color palette for 2026 */
+    --primary: #0ea5e9;
+    --primary-dark: #0284c7;
+    --secondary: #8b5cf6;
+    --accent: #f59e0b;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --neutral: #6b7280;
+    --surface: #f8fafc;
+    --surface-dark: #0f172a;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+    --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  body {
+    @apply bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50;
+    @apply text-slate-900 antialiased;
+    min-height: 100vh;
+  }
+
+  /* Dark mode */
+  @media (prefers-color-scheme: dark) {
+    body {
+      @apply bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900;
+      @apply text-slate-100;
+    }
+  }
+}
+
+@layer components {
+  /* Glassmorphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Modern button styles */
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700;
+    @apply text-white font-medium px-6 py-3 rounded-2xl;
+    @apply transform transition-all duration-200 ease-out;
+    @apply hover:scale-105 hover:shadow-xl;
+    @apply focus:outline-none focus:ring-4 focus:ring-blue-500/25;
+  }
+
+  .btn-secondary {
+    @apply bg-white/80 hover:bg-white;
+    @apply text-slate-700 font-medium px-6 py-3 rounded-2xl;
+    @apply border border-slate-200/50;
+    @apply transform transition-all duration-200 ease-out;
+    @apply hover:scale-105 hover:shadow-lg;
+    @apply focus:outline-none focus:ring-4 focus:ring-slate-500/25;
+  }
+
+  /* Input styles */
+  .input-modern {
+    @apply w-full px-4 py-3 rounded-2xl;
+    @apply bg-white/50 backdrop-blur-sm;
+    @apply border border-slate-200/50;
+    @apply text-slate-900 placeholder-slate-500;
+    @apply focus:outline-none focus:ring-4 focus:ring-blue-500/25;
+    @apply focus:border-blue-500/50 focus:bg-white/80;
+    @apply transition-all duration-200;
+  }
+
+  /* Chat bubble styles */
+  .chat-bubble-sent {
+    @apply bg-gradient-to-r from-blue-500 to-purple-600;
+    @apply text-white px-4 py-3 rounded-2xl rounded-br-md;
+    @apply max-w-xs ml-auto;
+    @apply shadow-lg shadow-blue-500/25;
+  }
+
+  .chat-bubble-received {
+    @apply bg-white/80 backdrop-blur-sm;
+    @apply text-slate-900 px-4 py-3 rounded-2xl rounded-bl-md;
+    @apply max-w-xs mr-auto;
+    @apply border border-slate-200/50;
+    @apply shadow-lg shadow-slate-500/10;
+  }
+
+  /* Scroll styles */
+  .scroll-smooth {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(203 213 225) transparent;
+  }
+
+  .scroll-smooth::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scroll-smooth::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scroll-smooth::-webkit-scrollbar-thumb {
+    background: rgb(203 213 225);
+    border-radius: 3px;
+  }
+
+  .scroll-smooth::-webkit-scrollbar-thumb:hover {
+    background: rgb(148 163 184);
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out forwards;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Text utilities */
+  .text-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  }
+}
